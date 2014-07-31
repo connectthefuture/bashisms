@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -x -e
+
+if [[ -d $HOME/.bash_it ]] {
+    cp *.bash $HOME/.bash_it/custom
+}
