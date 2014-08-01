@@ -2,6 +2,6 @@
 
 set -x -e
 
-if [[ -d $HOME/.bash_it ]] {
+if [[ -d $HOME/.bash_it ]] ; then
     cp *.bash $HOME/.bash_it/custom
-}
+fi
