@@ -20,13 +20,14 @@ function get_bosh_director() {
 
 function bosh_ip () {
     if [[ -z "$1" ]] || [[ "$1" == "help" ]] ; then
-      echo "usage: bosh_ip VM"
-      echo "returns the ip of the VM"
+      echo "usage: bosh_ip VM <deployment>"
+      echo "returns the ip of the VM using the current deployment unless <deployment> is specified"
+      return 1
     fi
 
     export VMS=''
     VMS=$1
-    CURRENT_DEPLOYMENT=`get_bosh_deployment`
+    CURRENT_DEPLOYMENT=${2:-`get_bosh_deployment`}
     VMS_FILE="$HOME/.bosh_cache/${CURRENT_DEPLOYMENT}_vms"
     IP=`cat $VMS_FILE | ruby -ne 'a = /#{Regexp.escape(ENV["VMS"])}(?:.+?\|){3}(.+?)\|/.match($_); puts a[1].strip if a;'`
     if [[ `get_bosh_target` == "warden" ]]; then
