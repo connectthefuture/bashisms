@@ -10,6 +10,7 @@ function veritas_envs() {
 
   export EXECUTOR_ADDR=http://`bosh_ip cell`:1700
   export ETCD_CLUSTER=http://`bosh_ip etcd`:4001
+  export WARDEN_ADDR=`bosh_ip cell`:7777
   export VITALS_ADDRS="\
 auctioneer:`bosh_ip cell`:17001,\
 converger:`bosh_ip cell`:17002,\
@@ -26,6 +27,7 @@ tps:`bosh_ip cf_bridge`:17012,\
 warden:`bosh_ip cell`:17013"
 
   echo "EXECUTOR_ADDR=$EXECUTOR_ADDR"
+  echo "WARDEN_ADDR=$WARDEN_ADDR"
   echo "ETCD_CLUSTER=$ETCD_CLUSTER"
   echo "VITALS_ADDRS=$VITALS_ADDRS"
 }
