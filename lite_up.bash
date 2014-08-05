@@ -105,5 +105,5 @@ function lite_me_up() {
   popd
 
   echo "Setting up bosh cache"
-  bosh_target warden
+  bosh_target warden --refresh
 }
