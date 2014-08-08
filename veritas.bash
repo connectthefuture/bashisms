@@ -1,3 +1,22 @@
+function veritas_up() {
+  local bootstrap='
+pushd $HOME
+rm veritas
+
+wget http://onsi-public.s3.amazonaws.com/veritas
+chmod +x ./veritas
+export PATH=$PATH:$PWD
+
+veritas autodetect && `veritas autodetect`
+
+veritas completions > ./.veritas_completions.bash
+source ./.veritas_completions.bash
+popd
+'
+  echo "Copied to clipboard:${bootstrap}"
+  echo "$bootstrap" | pbcopy
+}
+
 function veritas_envs() {
   if [[ `get_bosh_target` != "warden" ]] ; then
     echo "You must use bosh cache and set the target to 'warden'"
