@@ -3,7 +3,14 @@
 mkdir -p $HOME/.bosh_cache
 
 function current_bosh_cache() {
-  echo "Currently targetting: `get_bosh_target` | `get_bosh_deployment`"
+  echo -e "Currently targetting:  \x1B[32m`get_bosh_target`\x1B[0m | \x1B[32m`get_bosh_deployment`\x1B[0m"
+  if [[ -n "$1" ]] ; then
+    read -p "Is this correct? " -n 1
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]];then
+      return 1
+    fi
+  fi
 }
 
 function get_bosh_target() {
@@ -202,7 +209,10 @@ function bosh_ssh () {
       return;
     fi
 
-    current_bosh_cache
+    if ! current_bosh_cache --prompt ; then
+      return;
+    fi
+
     if [[ `get_bosh_target` == "warden" ]]; then
       if ! which sshpass > /dev/null ; then
         echo "Please install sshpas"
@@ -234,7 +244,10 @@ function bosh_download () {
       fi
     fi
 
-    current_bosh_cache
+    if ! current_bosh_cache --prompt ; then
+      return;
+    fi
+
     if [[ `get_bosh_target` == "warden" ]]; then
       IP=`bosh_ip $1`
       echo "scp vcap@$IP:$2 $3"
@@ -249,7 +262,9 @@ function bosh_download () {
 
 function bosh_tunnel () {
   return 1
-  current_bosh_cache
+  if ! current_bosh_cache --prompt ; then
+    return;
+  fi
   bosh_keys
   LOCAL_PORT=$1
   VMS=$2
