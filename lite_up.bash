@@ -5,11 +5,13 @@ function lite_me_up() {
     echo "usage: lite_me_up --hard to nuke the bosh-lite vm and start from scratch";
   fi
 
-  for DIR in $HOME/workspace/bosh-lite $HOME/workspace/cf-release $HOME/workspace/diego-release ; do
+  for DIR in $HOME/workspace/bosh-liter $HOME/workspace/cf-release $HOME/workspace/diego-release ; do
     if [[ ! -d $DIR ]] ; then
       echo "You must clone $DIR"
     fi
   done
+
+  touch /Users/pivotal/.bosh_warden_config
 
   if [[ "$1" == "--hard" ]]; then
     read -p "Will nuke bosh-lite's vm -- are you sure? " -n 1
@@ -18,7 +20,7 @@ function lite_me_up() {
       return 1
     fi
 
-    pushd ~/workspace/bosh-lite
+    pushd ~/workspace/bosh-liter
       echo "Destroying BOSH-lite VM"
       vagrant destroy -f
       echo "Bringing up BOSH-lite VM"
@@ -28,18 +30,18 @@ function lite_me_up() {
 
   pushd ~/workspace/bosh-lite
     echo "Targetting the director"
-    bosh target 192.168.50.4
-    bosh login admin admin
+    bosh -c $HOME/.bosh_warden_config target 192.168.50.4
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 login admin admin
     echo "Adding routes"
     ./scripts/add-route
 
     if [[ ! -a bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz ]]; then
       echo "Fetching trusty stemcell"
-      bosh download public stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
+      bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 download public stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
     fi
 
     echo "Uploading trusty stemcell"
-    bosh upload stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4  upload stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
   popd
 
   echo "Fetching latest spiff"
@@ -53,7 +55,7 @@ function lite_me_up() {
 
       echo "Generating warden stub"
       mkdir -p ~/workspace/deployments/warden
-      ./scripts/generate_director_stub > ~/workspace/deployments/warden/director.yml
+      printf "director_uuid: %s" $(bosh -c $HOME/.bosh_warden_config status --uuid) > ~/workspace/deployments/warden/director.yml
   popd
 
   pushd ~/workspace/cf-release
@@ -68,16 +70,16 @@ function lite_me_up() {
         ~/workspace/deployments/warden/cf.yml
 
     echo "Setting deployment to CF-Release"
-    bosh deployment ~/workspace/deployments/warden/cf.yml
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 deployment ~/workspace/deployments/warden/cf.yml
 
     echo "Creating CF-Release"
-    bosh create release --force
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml create release --force
 
     echo "Uploading CF-Release"
-    bosh -n upload release
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml -n upload release
 
     echo "Deploying CF-Release"
-    bosh -n deploy
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml -n deploy
   popd
 
   pushd ~/workspace/diego-release
@@ -87,17 +89,23 @@ function lite_me_up() {
         ~/workspace/deployments/warden/diego.yml
 
     echo "Setting deployment to Diego-Release"
-    bosh deployment ~/workspace/deployments/warden/diego.yml
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 deployment ~/workspace/deployments/warden/diego.yml
 
     echo "Creating Diego-Release"
-    bosh create release --force
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml create release --force
 
     echo "Uploading Diego-Release"
-    bosh -n upload release
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml -n upload release
 
     echo "Deploying Diego-Release"
-    bosh -n deploy
+    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml -n deploy
   popd
+
+  read -p "Done.  Do you want to setup bosh cache?  This will target warden globally. " -n 1
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]];then
+    return 1
+  fi
 
   echo "Setting up bosh cache"
   bosh_target warden --refresh
