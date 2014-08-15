@@ -23,29 +23,24 @@ function lite_me_up() {
       vagrant destroy -f
       echo "Bringing up BOSH-lite VM"
       vagrant up
-      echo "Targetting the director"
-      bosh target 192.168.50.4
-      bosh login admin admin
-      echo "Adding routes"
-      ./scripts/add-route
-
-      if [[ ! -a bosh-stemcell-3-warden-boshlite-ubuntu-trusty-go_agent.tgz ]]; then
-        echo "Fetching trusty stemcell"
-        bosh download public stemcell bosh-stemcell-3-warden-boshlite-ubuntu-trusty-go_agent.tgz
-      fi
-
-      if [[ ! -a bosh-stemcell-60-warden-boshlite-ubuntu-lucid-go_agent.tgz ]]; then
-        echo "Fetching lucid stemcell"
-        bosh download public bosh-stemcell-60-warden-boshlite-ubuntu-lucid-go_agent.tgz
-      fi
-
-      echo "Uploading trusty stemcell"
-      bosh upload stemcell bosh-stemcell-3-warden-boshlite-ubuntu-trusty-go_agent.tgz
-
-      echo "Uploading lucid stemcell"
-      bosh upload stemcell bosh-stemcell-60-warden-boshlite-ubuntu-lucid-go_agent.tgz
     popd
   fi
+
+  pushd ~/workspace/bosh-lite
+    echo "Targetting the director"
+    bosh target 192.168.50.4
+    bosh login admin admin
+    echo "Adding routes"
+    ./scripts/add-route
+
+    if [[ ! -a bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz ]]; then
+      echo "Fetching trusty stemcell"
+      bosh download public stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
+    fi
+
+    echo "Uploading trusty stemcell"
+    bosh upload stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
+  popd
 
   echo "Fetching latest spiff"
   go get -u -v github.com/cloudfoundry-incubator/spiff
