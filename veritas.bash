@@ -1,17 +1,18 @@
 function veritas_up() {
   local bootstrap='
-pushd $HOME
-rm veritas
+ pushd $HOME
+ rm veritas
+ rm veritas.bash
 
-wget http://onsi-public.s3.amazonaws.com/veritas
-chmod +x ./veritas
-export PATH=$PATH:$PWD
+ wget http://onsi-public.s3.amazonaws.com/veritas
+ chmod +x ./veritas
 
-veritas autodetect && `veritas autodetect`
+ echo "export PATH=$PATH:$PWD" > veritas.bash
+ ./veritas autodetect >> veritas.bash
+ ./veritas completions >> veritas.bash
 
-veritas completions > ./.veritas_completions.bash
-source ./.veritas_completions.bash
-popd
+ source ./veritas.bash
+ popd
 '
   echo "Copied to clipboard:${bootstrap}"
   echo "$bootstrap" | pbcopy
