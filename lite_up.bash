@@ -28,7 +28,7 @@ function lite_me_up() {
     popd
   fi
 
-  pushd ~/workspace/bosh-lite
+  pushd ~/workspace/bosh-liter
     echo "Targetting the director"
     bosh -c $HOME/.bosh_warden_config target 192.168.50.4
     bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 login admin admin
