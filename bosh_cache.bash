@@ -83,7 +83,7 @@ function bosh_target () {
     current_bosh_cache
     echo ""
     echo "usage: bosh_target TARGET (--refresh)"
-    echo "Supports TARGET in { ketchup, tabasco, a1, warden }"
+    echo "Supports TARGET in { ketchup, diego-1, diego-2, tabasco, a1, warden }"
     echo "By default, this simply targets bosh.  Use --refresh to update the local cache."
     return;
   fi
@@ -105,6 +105,46 @@ function bosh_target () {
         bosh vms cf-ketchup > $HOME/.bosh_cache/cf-ketchup_vms
         echo "Fetching Diego VMS"
         bosh vms cf-ketchup-diego > $HOME/.bosh_cache/cf-ketchup-diego_vms;
+      else
+        echo "NOT updating local cache.  Pass --refresh to do so";
+      fi
+      ;;
+    diego-1)
+      echo "Targeting Diego-1"
+      echo diego-1 > $HOME/.bosh_cache/target
+      echo micro.diego-1.cf-app.com > $HOME/.bosh_cache/director
+      bosh target micro.diego-1.cf-app.com
+      if [[ -n "$2" ]]; then
+        mkdir -p $HOME/.bosh_cache/diego-1
+        rm $HOME/.bosh_cache/diego-1/*
+        echo "Fetching CF Manifest"
+        bosh download manifest cf-diego-1 $HOME/.bosh_cache/diego-1/cf.yml
+        echo "Fetching Diego Manifest"
+        bosh download manifest cf-diego-1-diego $HOME/.bosh_cache/diego-1/diego.yml
+        echo "Fetching CF VMS"
+        bosh vms cf-diego-1 > $HOME/.bosh_cache/cf-diego-1_vms
+        echo "Fetching Diego VMS"
+        bosh vms cf-diego-1-diego > $HOME/.bosh_cache/cf-diego-1-diego_vms;
+      else
+        echo "NOT updating local cache.  Pass --refresh to do so";
+      fi
+      ;;
+    diego-2)
+      echo "Targeting Diego-2"
+      echo diego-2 > $HOME/.bosh_cache/target
+      echo micro.diego-2.cf-app.com > $HOME/.bosh_cache/director
+      bosh target micro.diego-2.cf-app.com
+      if [[ -n "$2" ]]; then
+        mkdir -p $HOME/.bosh_cache/diego-2
+        rm $HOME/.bosh_cache/diego-2/*
+        echo "Fetching CF Manifest"
+        bosh download manifest cf-diego-2 $HOME/.bosh_cache/diego-2/cf.yml
+        echo "Fetching Diego Manifest"
+        bosh download manifest cf-diego-2-diego $HOME/.bosh_cache/diego-2/diego.yml
+        echo "Fetching CF VMS"
+        bosh vms cf-diego-2 > $HOME/.bosh_cache/cf-diego-2_vms
+        echo "Fetching Diego VMS"
+        bosh vms cf-diego-2-diego > $HOME/.bosh_cache/cf-diego-2-diego_vms;
       else
         echo "NOT updating local cache.  Pass --refresh to do so";
       fi
