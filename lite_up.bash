@@ -5,7 +5,7 @@ function lite_me_up() {
     echo "usage: lite_me_up --hard to nuke the bosh-lite vm and start from scratch";
   fi
 
-  for DIR in $HOME/workspace/bosh-liter $HOME/workspace/cf-release $HOME/workspace/diego-release ; do
+  for DIR in $HOME/workspace/bosh-lite $HOME/workspace/cf-release $HOME/workspace/diego-release ; do
     if [[ ! -d $DIR ]] ; then
       echo "You must clone $DIR"
     fi
@@ -20,7 +20,7 @@ function lite_me_up() {
       return 1
     fi
 
-    pushd ~/workspace/bosh-liter
+    pushd ~/workspace/bosh-lite
       echo "Destroying BOSH-lite VM"
       vagrant destroy -f
       echo "Bringing up BOSH-lite VM"
@@ -28,7 +28,7 @@ function lite_me_up() {
     popd
   fi
 
-  pushd ~/workspace/bosh-liter
+  pushd ~/workspace/bosh-lite
     echo "Targetting the director"
     bosh -c $HOME/.bosh_warden_config target 192.168.50.4
     bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 login admin admin
