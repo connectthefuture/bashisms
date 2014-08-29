@@ -60,7 +60,7 @@ function lite_me_up() {
 
   pushd ~/workspace/cf-release
     echo "Updating CF-Release"
-    git checkout develop
+    git checkout runtime-passed
     ./update
 
     echo "Generating CF-Release's manifest"
