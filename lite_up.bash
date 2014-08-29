@@ -22,9 +22,9 @@ function lite_me_up() {
 
     pushd ~/workspace/bosh-lite
       echo "Destroying BOSH-lite VM"
-      vagrant destroy -f
+      vagrant destroy -f local
       echo "Bringing up BOSH-lite VM"
-      vagrant up
+      vagrant up local
     popd
   fi
 
