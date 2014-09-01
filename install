@@ -2,17 +2,8 @@
 
 set -x
 
-if [[ -d $HOME/.bash_it ]] ; then
-    cp *.bash $HOME/.bash_it/custom ;
-    if which -s veritas ; then
-      veritas completions > $HOME/.bash_it/custom/veritas_completions.bash
-    fi
-else
-    cp bosh_cache.bash $HOME/.bosh_cache.bash
-    cp cf_helpers.bash $HOME/.cf_helpers.bash
-    cp s3_upload.bash $HOME/.s3_upload.bash
-    cp veritas.bash $HOME/.veritas.bash
-    if which -s veritas ; then
-      veritas completions > $HOME/.veritas_completions.bash
-    fi
+mkdir -p $HOME/.bashisms
+cp *.bash $HOME/.bashisms
+if which -s veritas ; then
+  veritas completions > $HOME/.bashisms/.veritas_completions.bash
 fi
