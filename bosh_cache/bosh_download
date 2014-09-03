@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [[ -z "$1" ]] || [[ -z "$2" ]] || [[ -z "$3" ]]; then
+  echo "usage: bosh_download VM_NAME REMOTE_SOURCE LOCAL_DESTINATION"
+  echo "LOCAL_DESTINATION is always a folder"
+  return;
+fi
+
+if [[ ! -d $3 ]]; then
+  if ! mkdir -p $3; then
+    echo "$3 must be a folder"
+    return;
+  fi
+fi
+
+if ! current_bosh_cache --prompt ; then
+  return;
+fi
+
+if [[ `get_bosh_target` == "warden" ]]; then
+  IP=`bosh_ip $1`
+  echo "scp vcap@$IP:$2 $3"
+  scp -o StrictHostKeyChecking=no vcap@$IP:$2 $3
+else
+  bosh_keys
+  DIRECTOR_ADDRESS=`get_bosh_director`
+  echo "bosh scp $1 --download --gateway_host $DIRECTOR_ADDRESS --gateway_user vcap $2 $3"
+  bosh scp $1 --download --gateway_host $DIRECTOR_ADDRESS --gateway_user vcap $2 $3
+fi

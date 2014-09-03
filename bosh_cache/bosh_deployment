@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [[ -z "$1" ]] || [[ "$1" == "help" ]] ; then
+    current_bosh_cache
+    echo ""
+    echo "usage: bosh_deployment DEPLOYMENT"
+    echo "Supports DEPLOYMENT in { diego, cf }"
+    return;
+fi
+
+case "$1" in
+cf)
+  echo "Setting deployment to CF.  Current target: `get_bosh_target`"
+  bosh deployment $HOME/.bosh_cache/`get_bosh_target`/cf.yml
+  echo cf-`get_bosh_target` > $HOME/.bosh_cache/deployment;
+  ;;
+diego)
+  echo "Setting deployment to Diego.  Current target: `get_bosh_target`"
+  bosh deployment $HOME/.bosh_cache/`get_bosh_target`/diego.yml
+  if [[ `get_bosh_target` == "warden" ]]; then
+      echo warden-diego > $HOME/.bosh_cache/deployment;
+    else
+      echo cf-`get_bosh_target`-diego > $HOME/.bosh_cache/deployment;
+  fi
+  ;;
+*)
+  echo "Unkown deployment"
+  return
+esac

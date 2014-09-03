@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo -e "Currently targetting:  \x1B[32m`get_bosh_target`\x1B[0m | \x1B[32m`get_bosh_deployment`\x1B[0m"
+if [[ -n "$1" ]] ; then
+  read -p "Is this correct? " -n 1
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]];then
+    return 1
+  fi
+fi

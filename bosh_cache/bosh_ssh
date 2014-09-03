@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [[ -z "$1" ]] ; then
+  echo "usage: bosh_ssh VM_NAME"
+  return;
+fi
+
+if ! current_bosh_cache --prompt ; then
+  return;
+fi
+
+if [[ `get_bosh_target` == "warden" ]]; then
+  if ! which sshpass > /dev/null ; then
+    echo "Please install sshpas"
+    echo "brew install https://raw.github.com/eugeneoden/homebrew/eca9de1/Library/Formula/sshpass.rb"
+    return 1
+  fi
+  IP=`bosh_ip $1`
+  echo "ssh vcap@$IP"
+  sshpass -p c1oudc0w ssh -o StrictHostKeyChecking=no vcap@$IP #password??
+else
+  bosh_keys
+  DIRECTOR_ADDRESS=`get_bosh_director`
+  echo "bosh ssh $1 --gateway_host $DIRECTOR_ADDRESS --gateway_user vcap"
+  bosh ssh $1 --gateway_host $DIRECTOR_ADDRESS --gateway_user vcap;
+fi

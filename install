@@ -4,6 +4,8 @@ set -x
 
 mkdir -p $HOME/.bashisms
 cp *.bash $HOME/.bashisms
+cp -r ./bin $HOME/.bashisms/bin
+cp -r ./bosh_cache $HOME/.bashisms/bosh_cache
 if which -s veritas ; then
   veritas completions > $HOME/.bashisms/.veritas_completions.bash
 fi

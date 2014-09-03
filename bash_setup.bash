@@ -54,8 +54,9 @@ function prompt_func() {
 
 PROMPT_COMMAND=prompt_func
 export GOPATH="/Users/onsi/go"
-export PATH="$HOME/bin:$GOPATH/bin:$PATH"
+export PATH="$HOME/.bashisms/bin:$HOME/.bashisms/bosh_cache:$HOME/bin:$GOPATH/bin:$PATH"
 export EDITOR='subl -w'
+export GLIDER_URL=http://10.244.8.2.xip.io:5637
 
 function goto {
   local p
