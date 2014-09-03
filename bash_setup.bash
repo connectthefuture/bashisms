@@ -1,3 +1,6 @@
+source /usr/local/share/chruby/chruby.sh
+chruby ruby-1.9.3-p545
+
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 

@@ -2,6 +2,7 @@
 
 set -x
 
+rm -rf $HOME/.bashisms
 mkdir -p $HOME/.bashisms
 cp *.bash $HOME/.bashisms
 cp -r ./bin $HOME/.bashisms/bin
