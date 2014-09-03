@@ -7,9 +7,10 @@ if [[ -z "$1" ]] || ( [[ "$1" != "--hard" ]] && [[ "$1" != "--soft" ]] ) ; then
   exit 1
 fi
 
-for DIR in $HOME/workspace/bosh-lite $HOME/workspace/cf-release $HOME/workspace/diego-release $HOME/workspace/concourse $HOME/workspace/docker-boshrelease $HOME/workspace/bosh-manifests; do
+for DIR in $HOME/workspace/bosh-lite $HOME/workspace/cf-release $HOME/workspace/diego-release $HOME/workspace/concourse $HOME/workspace/bosh-manifests; do
   if [[ ! -d $DIR ]] ; then
     echo "You must clone $DIR"
+    exit 1
   fi
 done
 
@@ -125,7 +126,7 @@ popd
 read -p "Done.  Do you want to setup bosh cache?  This will target warden globally. " -n 1
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]];then
-  return 1
+  exit 1
 fi
 
 echo "Setting up bosh cache"
