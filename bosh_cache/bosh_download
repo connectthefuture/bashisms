@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $HOME/.bashisms/bosh_cache.bash
+
 if [[ -z "$1" ]] || [[ -z "$2" ]] || [[ -z "$3" ]]; then
   echo "usage: bosh_download VM_NAME REMOTE_SOURCE LOCAL_DESTINATION"
   echo "LOCAL_DESTINATION is always a folder"

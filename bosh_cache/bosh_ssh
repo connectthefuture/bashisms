@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $HOME/.bashisms/bosh_cache.bash
+
 if [[ -z "$1" ]] ; then
   echo "usage: bosh_ssh VM_NAME"
   return;
