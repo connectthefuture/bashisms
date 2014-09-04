@@ -5,7 +5,7 @@ if [[ -z "$1" ]] || [[ "$1" == "help" ]] ; then
     echo ""
     echo "usage: bosh_deployment DEPLOYMENT"
     echo "Supports DEPLOYMENT in { diego, cf }"
-    return;
+    exit 1;
 fi
 
 case "$1" in
@@ -25,5 +25,5 @@ diego)
   ;;
 *)
   echo "Unkown deployment"
-  return
+  exit 1;
 esac

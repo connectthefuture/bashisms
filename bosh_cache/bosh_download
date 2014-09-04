@@ -5,18 +5,18 @@ source $HOME/.bashisms/bosh_cache.bash
 if [[ -z "$1" ]] || [[ -z "$2" ]] || [[ -z "$3" ]]; then
   echo "usage: bosh_download VM_NAME REMOTE_SOURCE LOCAL_DESTINATION"
   echo "LOCAL_DESTINATION is always a folder"
-  return;
+  exit 1;
 fi
 
 if [[ ! -d $3 ]]; then
   if ! mkdir -p $3; then
     echo "$3 must be a folder"
-    return;
+    exit 1;
   fi
 fi
 
 if ! current_bosh_cache --prompt ; then
-  return;
+  exit 1;
 fi
 
 if [[ `get_bosh_target` == "warden" ]]; then

@@ -20,7 +20,7 @@ if [[ "$1" == "--hard" ]]; then
   read -p "Will nuke bosh-lite's vm -- are you sure? " -n 1
   echo
   if [[ ! $REPLY =~ ^[Yy]$ ]];then
-    return 1
+    exit 1
   fi
 
   pushd ~/workspace/bosh-lite

@@ -6,7 +6,7 @@ if [[ -z "$1" ]] || [[ "$1" == "help" ]] ; then
   echo "usage: bosh_target TARGET (--refresh)"
   echo "Supports TARGET in { ketchup, diego-1, diego-2, tabasco, a1, warden }"
   echo "By default, this simply targets bosh.  Use --refresh to update the local cache."
-  return;
+  exit 1;
 fi
 
 case "$1" in
@@ -130,7 +130,7 @@ case "$1" in
     ;;
   *)
     echo "Unkown target"
-    return
+    exit 1
 esac
 
 echo "Updating bosh deployment"

@@ -2,7 +2,7 @@
 if [[ -z "$1" ]] || [[ "$1" == "help" ]] ; then
   echo "usage: bosh_ip VM <deployment>"
   echo "returns the ip of the VM using the current deployment unless <deployment> is specified"
-  return 1
+  exit 1
 fi
 
 VMS=$1
