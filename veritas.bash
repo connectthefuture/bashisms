@@ -39,13 +39,13 @@ converger:`bosh_ip cell warden-diego`:17002,\
 etcd_metrics_server:`bosh_ip etcd warden-diego`:17003,\
 executor:`bosh_ip cell warden-diego`:17004,\
 file_server:`bosh_ip file_server_z1/0 warden-diego`:17005,\
-nsync-listener:`bosh_ip cf_bridge warden-diego`:17006,\
-nsync-bulker:`bosh_ip cf_bridge warden-diego`:17007,\
+nsync-listener:`bosh_ip cc_bridge warden-diego`:17006,\
+nsync-bulker:`bosh_ip cc_bridge warden-diego`:17007,\
 rep:`bosh_ip cell warden-diego`:17008,\
 route-emitter:`bosh_ip route_emitter_z1/0 warden-diego`:17009,\
 runtime-metrics-server:`bosh_ip runtime_metrics_server warden-diego`:17010,\
-stager:`bosh_ip cf_bridge warden-diego`:17011,\
-tps:`bosh_ip cf_bridge warden-diego`:17012,\
+stager:`bosh_ip cc_bridge warden-diego`:17011,\
+tps:`bosh_ip cc_bridge warden-diego`:17012,\
 warden:`bosh_ip cell warden-diego`:17013"
 
   echo "EXECUTOR_ADDR=$EXECUTOR_ADDR"
