@@ -25,9 +25,9 @@ if [[ "$1" == "--hard" ]]; then
 
   pushd ~/workspace/bosh-lite
     echo "Destroying BOSH-lite VM"
-    vagrant destroy -f local
+    vagrant destroy -f
     echo "Bringing up BOSH-lite VM"
-    VM_MEMORY=8192 VM_CORES=4 vagrant up local
+    VM_MEMORY=8192 VM_CORES=4 vagrant up --provider=virtualbox
   popd
 fi
 
@@ -113,7 +113,7 @@ pushd ~/workspace/concourse
   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 deployment ~/workspace/deployments/warden/concourse.yml
 
   echo "Identifying latest concourse version:"
-  CONCOURSE_VERSION=`cat releases/concourse/index.yml | egrep "\sversion:" | tail -n1 | tr -d "    version: "`
+  CONCOURSE_VERSION=`cat releases/concourse/index.yml | egrep "\sversion:" | tail -n1 | sed "s/    version: //"`
   echo $CONCOURSE_VERSION
 
   echo "Uploading Concourse"
