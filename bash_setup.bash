@@ -105,3 +105,4 @@ function each_ff {
   each "git pull --ff-only origin master && git submodule update --init --recursive"
 }
 
+eval "$(direnv hook $0)"
