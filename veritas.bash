@@ -47,6 +47,8 @@ runtime-metrics-server:`bosh_ip runtime_metrics_server warden-diego`:17010,\
 stager:`bosh_ip cc_bridge warden-diego`:17011,\
 tps:`bosh_ip cc_bridge warden-diego`:17012,\
 garden:`bosh_ip cell warden-diego`:17013"
+  export DROPSONDE_ORIGIN=veritas
+  export DROPSONDE_DESTINATION=localhost:3457
 
   echo "EXECUTOR_ADDR=$EXECUTOR_ADDR"
   echo "LOGGREGATOR_ADDR=$LOGGREGATOR_ADDR"
