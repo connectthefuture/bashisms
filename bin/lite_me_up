@@ -87,7 +87,7 @@ pushd ~/workspace/diego-release
   ./scripts/update
 
   echo "Generating Diego-Release's manifest"
-  ./generate_deployment_manifest warden ../cf-release \
+  ./generate_deployment_manifest bosh-lite ../cf-release \
       ~/workspace/deployments/warden/director.yml > \
       ~/workspace/deployments/warden/diego.yml
 
