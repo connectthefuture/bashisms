@@ -119,11 +119,11 @@ case "$1" in
       echo "Fetching CF Manifest"
       bosh download manifest cf-warden $HOME/.bosh_cache/warden/cf.yml
       echo "Fetching Diego Manifest"
-      bosh download manifest warden-diego $HOME/.bosh_cache/warden/diego.yml
+      bosh download manifest garden-diego $HOME/.bosh_cache/warden/diego.yml
       echo "Fetching CF VMS"
       bosh vms cf-warden > $HOME/.bosh_cache/cf-warden_vms
       echo "Fetching Diego VMS"
-      bosh vms warden-diego > $HOME/.bosh_cache/warden-diego_vms;
+      bosh vms garden-diego > $HOME/.bosh_cache/warden-diego_vms;
     else
       echo "NOT updating local cache.  Pass --refresh to do so";
     fi
