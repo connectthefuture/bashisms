@@ -43,6 +43,7 @@ executor:`bosh_ip cell warden-diego`:17004,\
 file_server:`bosh_ip file_server_z1/0 warden-diego`:17005,\
 nsync-listener:`bosh_ip cc_bridge warden-diego`:17006,\
 nsync-bulker:`bosh_ip cc_bridge warden-diego`:17007,\
+receptor:`bosh_ip cell warden-diego`:17014,\
 rep:`bosh_ip cell warden-diego`:17008,\
 route-emitter:`bosh_ip route_emitter_z1/0 warden-diego`:17009,\
 runtime-metrics-server:`bosh_ip runtime_metrics_server warden-diego`:17010,\
@@ -51,6 +52,7 @@ tps:`bosh_ip cc_bridge warden-diego`:17012,\
 garden:`bosh_ip cell warden-diego`:17013"
   export DROPSONDE_ORIGIN=veritas
   export DROPSONDE_DESTINATION=localhost:3457
+  export RECEPTOR_ENDPOINT=`bosh_ip cell warden-diego`:8888
 
   echo "EXECUTOR_ADDR=$EXECUTOR_ADDR"
   echo "LOGGREGATOR_ADDR=$LOGGREGATOR_ADDR"
@@ -58,4 +60,5 @@ garden:`bosh_ip cell warden-diego`:17013"
   echo "GARDEN_NETWORK=$GARDEN_NETWORK"
   echo "ETCD_CLUSTER=$ETCD_CLUSTER"
   echo "VITALS_ADDRS=$VITALS_ADDRS"
+  echo "RECEPTOR_ENDPOINT=$RECEPTOR_ENDPOINT"
 }
