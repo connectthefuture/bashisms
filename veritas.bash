@@ -20,7 +20,7 @@ function veritas_up() {
   echo "$bootstrap" | pbcopy
 }
 
-function veritas_edge() {
+function edge_envs() {
   export LOGGREGATOR_ADDR=loggregator.192.168.11.11.xip.io
   export DIEGO_RECEPTOR_ADDRESS=receptor.192.168.11.11.xip.io
   export RECEPTOR_ENDPOINT=receptor.192.168.11.11.xip.io
