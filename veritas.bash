@@ -24,7 +24,7 @@ function veritas_edge() {
   export LOGGREGATOR_ADDR=loggregator.192.168.11.11.xip.io
   export DIEGO_RECEPTOR_ADDRESS=receptor.192.168.11.11.xip.io
   export RECEPTOR_ENDPOINT=receptor.192.168.11.11.xip.io
-  export EXECUTOR_ADDR=192.168.11.11:1700
+  export EXECUTOR_ADDR=http://192.168.11.11:1700
   export ETCD_CLUSTER=http://192.168.11.11:4001
   export GARDEN_ADDR=192.168.11.11:7777
   export GARDEN_NETWORK="tcp"
