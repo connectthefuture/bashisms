@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
-if [[ -z "$1" ]] || ( [[ "$1" != "--hard" ]] && [[ "$1" != "--soft" ]] ) ; then
+if [[ -z "$1" ]] || ( [[ "$1" != "--hard" ]] && [[ "$1" != "--soft" ]] ); then
   echo "lite_me_up: redeploy cf + diego to bosh-lite"
   echo "usage: lite_me_up --soft to simply perform a deploy"
   echo "usage: lite_me_up --hard to nuke the bosh-lite vm and start from scratch";
+  echo "usage: lite_me_up --soft/hard --update to pull the latest diego-release and cf-release"
   exit 1
+fi
+
+if [[ "$2" != "--update" ]]; then
+  echo "**** WILL NOT PULL REPOS! ****"
+  echo "pass --update to pull"
 fi
 
 for DIR in $HOME/workspace/bosh-lite $HOME/workspace/cf-release $HOME/workspace/diego-release $HOME/workspace/concourse $HOME/workspace/bosh-manifests; do
@@ -58,9 +64,11 @@ mkdir -p ~/workspace/deployments/warden
 printf "director_uuid: %s" $(bosh -c $HOME/.bosh_warden_config status --uuid) > ~/workspace/deployments/warden/director.yml
 
 pushd ~/workspace/cf-release
-  echo "Updating CF-Release"
-  git checkout runtime-passed
-  ./update
+  if [[ "$2" == "--update" ]]; then
+    echo "Updating CF-Release"
+    git checkout runtime-passed
+    ./update
+  fi
 
   echo "Generating CF-Release's manifest"
   ./generate_deployment_manifest warden \
@@ -82,9 +90,11 @@ pushd ~/workspace/cf-release
 popd
 
 pushd ~/workspace/diego-release
-  echo "Updating Diego-Release"
-  git checkout develop
-  ./scripts/update
+  if [[ "$2" == "--update" ]]; then
+    echo "Updating Diego-Release"
+    git checkout develop
+    ./scripts/update
+  fi
 
   echo "Generating Diego-Release's manifest"
   ./scripts/generate-deployment-manifest bosh-lite ../cf-release \
