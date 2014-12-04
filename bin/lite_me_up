@@ -56,9 +56,6 @@ pushd ~/workspace/bosh-lite
   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4  upload stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
 popd
 
-echo "Fetching latest spiff"
-go get -u -v github.com/cloudfoundry-incubator/spiff
-
 echo "Generating warden stub"
 mkdir -p ~/workspace/deployments/warden
 printf "director_uuid: %s" $(bosh -c $HOME/.bosh_warden_config status --uuid) > ~/workspace/deployments/warden/director.yml
@@ -113,50 +110,6 @@ pushd ~/workspace/diego-release
   echo "Deploying Diego-Release"
   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml -n deploy
 popd
-
-# pushd ~/workspace/concourse
-#   echo "Updating concourse"
-#   git pull origin master
-#   git submodule update --init --recursive
-
-#   echo "Generating manifest"
-#   spiff merge ~/workspace/bosh-manifests/concourse.yml ~/workspace/deployments/warden/director.yml > ~/workspace/deployments/warden/concourse.yml
-
-#   echo "Setting deployment to Concourse"
-#   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 deployment ~/workspace/deployments/warden/concourse.yml
-
-#   echo "Identifying latest concourse version:"
-#   CONCOURSE_VERSION=`cat releases/concourse/index.yml | egrep "\sversion:" | tail -n1 | sed "s/    version: //"`
-#   echo $CONCOURSE_VERSION
-
-#   echo "Uploading Concourse"
-#   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/concourse.yml -n upload release ./releases/concourse/concourse-$CONCOURSE_VERSION.yml --skip-if-exists
-
-#   echo "Deploying Concourse"
-#   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/concourse.yml -n deploy
-# popd
-
-# pushd ~/workspace/docker-boshrelease
-#   echo "Updating docker-boshrelease"
-#   git pull origin master
-#   git submodule update --init --recursive
-
-#   echo "Generating manifest"
-#   spiff merge ~/workspace/bosh-manifests/docker.yml ~/workspace/deployments/warden/director.yml > ~/workspace/deployments/warden/docker.yml
-
-#   echo "Setting deployment to Concourse"
-#   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 deployment ~/workspace/deployments/warden/docker.yml
-
-#   echo "Identifying latest concourse version:"
-#   DOCKER_VERSION=`cat releases/index.yml | egrep "\sversion:" | tail -n1 | sed "s/    version: //"`
-#   echo $DOCKER_VERSION
-
-#   echo "Uploading Concourse"
-#   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/docker.yml -n upload release ./releases/docker-$DOCKER_VERSION.yml --skip-if-exists
-
-#   echo "Deploying Concourse"
-#   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/docker.yml -n deploy
-# popd
 
 read -p "Done.  Do you want to setup bosh cache?  This will target warden globally. " -n 1
 echo

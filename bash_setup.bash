@@ -56,7 +56,7 @@ function prompt_func() {
 }
 
 export PROMPT_COMMAND=prompt_func
-export GOPATH="/Users/onsi/go"
+export GOPATH="/Users/onsi/workspace/diego-release"
 export PATH="$HOME/.bashisms/bin:$HOME/.bashisms/bosh_cache:$HOME/bin:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH"
 export EDITOR='subl -w'
 export GLIDER_URL=http://10.244.8.2.xip.io:5637
