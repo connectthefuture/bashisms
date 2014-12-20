@@ -20,6 +20,9 @@ for DIR in $HOME/workspace/bosh-lite $HOME/workspace/cf-release $HOME/workspace/
   fi
 done
 
+echo "Need sudo password"
+sudo echo "Got sudo password"
+
 touch $HOME/.bosh_warden_config
 
 if [[ "$1" == "--hard" ]]; then

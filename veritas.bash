@@ -46,8 +46,8 @@ function veritas_envs() {
   export GARDEN_ADDR=`bosh_ip cell warden-diego`:7777
   export GARDEN_NETWORK="tcp"
   export VITALS_ADDRS="\
-auctioneer:`bosh_ip cell warden-diego`:17001,\
-converger:`bosh_ip cell warden-diego`:17002,\
+auctioneer:`bosh_ip brain warden-diego`:17001,\
+converger:`bosh_ip brain warden-diego`:17002,\
 etcd_metrics_server:`bosh_ip etcd warden-diego`:17003,\
 executor:`bosh_ip cell warden-diego`:17004,\
 file_server:`bosh_ip file_server_z1/0 warden-diego`:17005,\
@@ -62,7 +62,7 @@ tps:`bosh_ip cc_bridge warden-diego`:17012,\
 garden:`bosh_ip cell warden-diego`:17013"
   export DROPSONDE_ORIGIN=veritas
   export DROPSONDE_DESTINATION=localhost:3457
-  export RECEPTOR_ENDPOINT=`bosh_ip cell warden-diego`:8888
+  export LTC_TARGET=`bosh_ip ha_proxy_z1/0 cf-warden`.xip.io
 
   echo "EXECUTOR_ADDR=$EXECUTOR_ADDR"
   echo "LOGGREGATOR_ADDR=$LOGGREGATOR_ADDR"
@@ -70,5 +70,5 @@ garden:`bosh_ip cell warden-diego`:17013"
   echo "GARDEN_NETWORK=$GARDEN_NETWORK"
   echo "ETCD_CLUSTER=$ETCD_CLUSTER"
   echo "VITALS_ADDRS=$VITALS_ADDRS"
-  echo "RECEPTOR_ENDPOINT=$RECEPTOR_ENDPOINT"
+  echo "LTC_TARGET=$LTC_TARGET"
 }
