@@ -39,7 +39,7 @@ if [[ "$1" == "--hard" ]]; then
     echo "Destroying BOSH-lite VM"
     vagrant destroy -f
     echo "Bringing up BOSH-lite VM"
-    VM_MEMORY=8192 VM_CORES=4 vagrant up --provider=vmware_fusion
+    VM_MEMORY=8192 VM_CORES=4 vagrant up
   popd
 fi
 
@@ -98,7 +98,8 @@ pushd ~/workspace/diego-release
 
   echo "Generating Diego-Release's manifest"
   ./scripts/generate-deployment-manifest bosh-lite ../cf-release \
-      ~/workspace/deployments/warden/director.yml > \
+      ~/workspace/deployments/warden/director.yml \
+      ~/workspace/deployments/bosh-lite-stub.yml > \
       ~/workspace/deployments/warden/diego.yml
 
   echo "Setting deployment to Diego-Release"
