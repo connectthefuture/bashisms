@@ -56,7 +56,7 @@ nsync-bulker:`bosh_ip cc_bridge warden-diego`:17007,\
 receptor:`bosh_ip cell warden-diego`:17014,\
 rep:`bosh_ip cell warden-diego`:17008,\
 route-emitter:`bosh_ip route_emitter_z1/0 warden-diego`:17009,\
-runtime-metrics-server:`bosh_ip runtime_metrics_server warden-diego`:17010,\
+runtime-metrics-server:`bosh_ip brain warden-diego`:17010,\
 stager:`bosh_ip cc_bridge warden-diego`:17011,\
 tps:`bosh_ip cc_bridge warden-diego`:17012,\
 garden:`bosh_ip cell warden-diego`:17013"
