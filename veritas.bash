@@ -50,7 +50,7 @@ auctioneer:`bosh_ip brain warden-diego`:17001,\
 converger:`bosh_ip brain warden-diego`:17002,\
 etcd_metrics_server:`bosh_ip etcd warden-diego`:17003,\
 executor:`bosh_ip cell warden-diego`:17004,\
-file_server:`bosh_ip file_server_z1/0 warden-diego`:17005,\
+file_server:`bosh_ip cc_bridge warden-diego`:17005,\
 nsync-listener:`bosh_ip cc_bridge warden-diego`:17006,\
 nsync-bulker:`bosh_ip cc_bridge warden-diego`:17007,\
 receptor:`bosh_ip cell warden-diego`:17014,\
