@@ -48,12 +48,8 @@ function cf_diego2() {
   cf target -s onsi
 }
 
-function cf_diego_envs() {
-  if [[ -z "$1" ]]; then
-    echo "cf_diego_envs APP"
-    echo "sets up CF_DIEGO_BETA and CF_DIEGO_RUN_BETA on an app"
-    return
-  fi
-  cf set-env $1 CF_DIEGO_BETA true
-  cf set-env $1 CF_DIEGO_RUN_BETA true;
+function cf_push() {
+  cf push "$@" --no-start
+  cf curl /v2/apps/`cf app $1 --guid` -X PUT -d '{"diego":true}'
+  cf start $1
 }
