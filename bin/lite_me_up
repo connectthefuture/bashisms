@@ -73,6 +73,7 @@ pushd ~/workspace/cf-release
   echo "Generating CF-Release's manifest"
   ./generate_deployment_manifest warden \
       ~/workspace/deployments/warden/director.yml \
+      ~/workspace/cf-release/templates/cf-minimal-dev.yml \
       ~/workspace/diego-release/templates/enable_diego_docker_in_cc.yml > \
       ~/workspace/deployments/warden/cf.yml
 
