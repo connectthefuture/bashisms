@@ -77,8 +77,8 @@ pushd ~/workspace/cf-release
       ~/workspace/diego-release/templates/enable_diego_docker_in_cc.yml > \
       ~/workspace/deployments/warden/cf.yml
 
-  echo "Setting deployment to CF-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 deployment ~/workspace/deployments/warden/cf.yml
+  echo "Syncing Blobs"
+  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml --parallel 4 sync blobs
 
   echo "Creating CF-Release"
   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml create release --force
@@ -103,8 +103,8 @@ pushd ~/workspace/diego-release
       ~/workspace/deployments/bosh-lite-stub.yml > \
       ~/workspace/deployments/warden/diego.yml
 
-  echo "Setting deployment to Diego-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 deployment ~/workspace/deployments/warden/diego.yml
+  echo "Syncing Blobs"
+  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml --parallel 4 sync blobs
 
   echo "Creating Diego-Release"
   bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml create release --force
