@@ -45,23 +45,23 @@ fi
 
 pushd ~/workspace/bosh-lite
   echo "Targetting the director"
-  bosh -c $HOME/.bosh_warden_config target 192.168.50.4 lite
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 login admin admin
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config target 192.168.50.4 lite
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 login admin admin
   echo "Adding routes"
   ./bin/add-route
 
   if [[ ! -a bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz ]]; then
     echo "Fetching trusty stemcell"
-    bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 download public stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
+    BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 download public stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
   fi
 
   echo "Uploading trusty stemcell"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4  upload stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4  upload stemcell bosh-stemcell-17-warden-boshlite-ubuntu-trusty-go_agent.tgz
 popd
 
 echo "Generating warden stub"
 mkdir -p ~/workspace/deployments/warden
-printf "director_uuid: %s" $(bosh -c $HOME/.bosh_warden_config status --uuid) > ~/workspace/deployments/warden/director.yml
+printf "director_uuid: %s" $(BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config status --uuid) > ~/workspace/deployments/warden/director.yml
 
 pushd ~/workspace/cf-release
   if [[ "$2" == "--update" ]]; then
@@ -78,16 +78,16 @@ pushd ~/workspace/cf-release
       ~/workspace/deployments/warden/cf.yml
 
   echo "Syncing Blobs"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml --parallel 4 sync blobs
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml --parallel 4 sync blobs
 
   echo "Creating CF-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml create release --force
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml create release --force
 
   echo "Uploading CF-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml -n upload release
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml -n upload release
 
   echo "Deploying CF-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml -n deploy
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml -n deploy
 popd
 
 pushd ~/workspace/diego-release
@@ -104,16 +104,16 @@ pushd ~/workspace/diego-release
       ~/workspace/deployments/warden/diego.yml
 
   echo "Syncing Blobs"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml --parallel 4 sync blobs
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml --parallel 4 sync blobs
 
   echo "Creating Diego-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml create release --force
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml create release --force
 
   echo "Uploading Diego-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml -n upload release
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml -n upload release
 
   echo "Deploying Diego-Release"
-  bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml -n deploy
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml -n deploy
 popd
 
 read -p "Done.  Do you want to setup bosh cache?  This will target warden globally. " -n 1
