@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 if [[ -z "$1" ]] || [[ "$1" == "help" ]] ; then
   echo "usage: bosh_ip VM <deployment>"
   echo "returns the ip of the VM using the current deployment unless <deployment> is specified"

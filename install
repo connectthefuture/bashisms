@@ -4,6 +4,7 @@ set -x
 
 rm -rf $HOME/.bashisms
 mkdir -p $HOME/.bashisms
+cp *.Gemfile $HOME/.bashisms
 cp *.bash $HOME/.bashisms
 cp -r ./bin $HOME/.bashisms/bin
 cp -r ./bosh_cache $HOME/.bashisms/bosh_cache

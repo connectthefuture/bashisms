@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source $HOME/.bashisms/aliases.bash
 source $HOME/.bashisms/bosh_cache.bash
 
 if [[ -z "$1" ]] ; then
@@ -24,5 +25,5 @@ else
   bosh_keys
   DIRECTOR_ADDRESS=`get_bosh_director`
   echo "bosh ssh $1 --gateway_host $DIRECTOR_ADDRESS --gateway_user vcap"
-  bosh ssh $1 --gateway_host $DIRECTOR_ADDRESS --gateway_user vcap;
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh ssh $1 --gateway_host $DIRECTOR_ADDRESS --gateway_user vcap;
 fi
