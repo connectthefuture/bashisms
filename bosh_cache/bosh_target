@@ -125,7 +125,7 @@ case "$1" in
       echo "Fetching CF VMS"
       BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh vms cf-warden > $HOME/.bosh_cache/cf-warden_vms
       echo "Fetching Diego VMS"
-      BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh vms cf-warden-diego > $HOME/.bosh_cache/warden-diego_vms;
+      BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh vms cf-warden-diego > $HOME/.bosh_cache/cf-warden-diego_vms;
     else
       echo "NOT updating local cache.  Pass --refresh to do so";
     fi
