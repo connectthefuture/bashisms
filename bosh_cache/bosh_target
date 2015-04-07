@@ -121,11 +121,11 @@ case "$1" in
       echo "Fetching CF Manifest"
       BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh download manifest cf-warden $HOME/.bosh_cache/warden/cf.yml
       echo "Fetching Diego Manifest"
-      BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh download manifest garden-diego $HOME/.bosh_cache/warden/diego.yml
+      BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh download manifest cf-warden-diego $HOME/.bosh_cache/warden/diego.yml
       echo "Fetching CF VMS"
       BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh vms cf-warden > $HOME/.bosh_cache/cf-warden_vms
       echo "Fetching Diego VMS"
-      BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh vms garden-diego > $HOME/.bosh_cache/warden-diego_vms;
+      BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh vms cf-warden-diego > $HOME/.bosh_cache/warden-diego_vms;
     else
       echo "NOT updating local cache.  Pass --refresh to do so";
     fi

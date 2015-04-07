@@ -17,11 +17,7 @@ cf)
 diego)
   echo "Setting deployment to Diego.  Current target: `get_bosh_target`"
   BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh deployment $HOME/.bosh_cache/`get_bosh_target`/diego.yml
-  if [[ `get_bosh_target` == "warden" ]]; then
-      echo warden-diego > $HOME/.bosh_cache/deployment;
-    else
-      echo cf-`get_bosh_target`-diego > $HOME/.bosh_cache/deployment;
-  fi
+  echo cf-`get_bosh_target`-diego > $HOME/.bosh_cache/deployment;
   ;;
 *)
   echo "Unkown deployment"
