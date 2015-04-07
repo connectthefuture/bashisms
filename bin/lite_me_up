@@ -76,8 +76,9 @@ pushd ~/workspace/cf-release
   ./generate_deployment_manifest warden \
       ~/workspace/deployments/warden/director.yml \
       ~/workspace/cf-release/templates/cf-minimal-dev.yml \
-      ~/workspace/diego-release/templates/enable_diego_docker_in_cc.yml > \
-      ~/workspace/deployments/warden/cf.yml
+      ~/workspace/diego-release/stubs-for-cf-release/enable_diego_docker_in_cc.yml \
+      ~/workspace/diego-release/stubs-for-cf-release/enable_consul_with_cf.yml \
+      > ~/workspace/deployments/warden/cf.yml
 
   echo "Syncing Blobs"
   BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/cf.yml --parallel 4 sync blobs
@@ -100,10 +101,14 @@ pushd ~/workspace/diego-release
   fi
 
   echo "Generating Diego-Release's manifest"
-  ./scripts/generate-deployment-manifest bosh-lite ../cf-release \
-      ~/workspace/deployments/warden/director.yml \
-      ~/workspace/deployments/bosh-lite-stub.yml > \
-      ~/workspace/deployments/warden/diego.yml
+  ./scripts/generate-deployment-manifest \
+    manifest-generation/bosh-lite-stubs/property-overrides.yml \
+    manifest-generation/bosh-lite-stubs/instance-count-overrides.yml \
+    manifest-generation/bosh-lite-stubs/persistent-disk-overrides.yml \
+    manifest-generation/bosh-lite-stubs/iaas-settings.yml \
+    ~/workspace/deployments/bosh-lite-stub.yml \
+    ~/workspace/deployments/warden \
+    > ~/workspace/deployments/warden/diego.yml
 
   echo "Syncing Blobs"
   BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml --parallel 4 sync blobs

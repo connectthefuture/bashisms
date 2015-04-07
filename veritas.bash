@@ -1,10 +1,7 @@
 function veritas_up() {
   local bootstrap='
  pushd $HOME
- rm veritas
- rm veritas.bash
-
- wget http://onsi-public.s3.amazonaws.com/veritas
+ wget http://onsi-public.s3.amazonaws.com/veritas -O ./veritas
  chmod +x ./veritas
 
  echo "export PATH=$PATH:$PWD" > veritas.bash
@@ -39,7 +36,7 @@ function veritas_envs() {
     return 1
   fi
 
-  export LOGGREGATOR_ADDR=`bosh_ip loggregator_z1/0 cf-warden warden-diego`:8080
+  export LOGGREGATOR_ADDR=`bosh_ip loggregator_z1/0 cf-warden`:8080
 
   export EXECUTOR_ADDR=http://`bosh_ip cell warden-diego`:1700
   export ETCD_CLUSTER=http://`bosh_ip etcd warden-diego`:4001
