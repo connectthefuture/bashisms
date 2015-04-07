@@ -101,12 +101,17 @@ pushd ~/workspace/diego-release
   fi
 
   echo "Generating Diego-Release's manifest"
+
+  spiff merge ~/workspace/deployments/bosh-lite-stub.yml \
+   ./manifest-generation/bosh-lite-stubs/property-overrides.yml \
+   > ~/workspace/deployments/property-overrides.yml
+
   ./scripts/generate-deployment-manifest \
-    manifest-generation/bosh-lite-stubs/property-overrides.yml \
+    ~/workspace/deployments/warden/director.yml \
+    ~/workspace/deployments/property-overrides.yml \
     manifest-generation/bosh-lite-stubs/instance-count-overrides.yml \
     manifest-generation/bosh-lite-stubs/persistent-disk-overrides.yml \
     manifest-generation/bosh-lite-stubs/iaas-settings.yml \
-    ~/workspace/deployments/bosh-lite-stub.yml \
     ~/workspace/deployments/warden \
     > ~/workspace/deployments/warden/diego.yml
 
