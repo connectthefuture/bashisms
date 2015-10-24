@@ -1,17 +1,17 @@
 function veritas_up() {
   local bootstrap='
- pushd $HOME
- wget http://onsi-public.s3.amazonaws.com/veritas -O ./veritas
- chmod +x ./veritas
+  pushd $HOME
+  wget https://github.com/pivotal-cf-experimental/veritas/releases/download/latest/veritas -O ./veritas
+  chmod +x ./veritas
 
- echo "export PATH=$PATH:$PWD" > veritas.bash
- echo "export DROPSONDE_ORIGIN=veritas" >> veritas.bash
- echo "export DROPSONDE_DESTINATION=localhost:3457" >> veritas.bash
- ./veritas autodetect >> veritas.bash
- ./veritas completions >> veritas.bash
+  echo "export PATH=$PATH:$PWD" > veritas.bash
+  echo "export DROPSONDE_ORIGIN=veritas" >> veritas.bash
+  echo "export DROPSONDE_DESTINATION=localhost:3457" >> veritas.bash
+  ./veritas autodetect >> veritas.bash
+  ./veritas completions >> veritas.bash
 
- source ./veritas.bash
- popd
+  source ./veritas.bash
+  popd
 '
   echo "Copied to clipboard:${bootstrap}"
   echo "$bootstrap" | pbcopy

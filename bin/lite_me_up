@@ -75,9 +75,8 @@ pushd ~/workspace/cf-release
   echo "Generating CF-Release's manifest"
   ./generate_deployment_manifest warden \
       ~/workspace/deployments/warden/director.yml \
-      ~/workspace/cf-release/templates/cf-minimal-dev.yml \
-      ~/workspace/diego-release/stubs-for-cf-release/enable_diego_docker_in_cc.yml \
       ~/workspace/diego-release/stubs-for-cf-release/enable_consul_with_cf.yml \
+      ~/workspace/diego-release/stubs-for-cf-release/enable_diego_ssh_in_cc.yml \
       > ~/workspace/deployments/warden/cf.yml
 
   echo "Syncing Blobs"
@@ -108,12 +107,16 @@ pushd ~/workspace/diego-release
 
   ./scripts/generate-deployment-manifest \
     ~/workspace/deployments/warden/director.yml \
-    ~/workspace/deployments/property-overrides.yml \
+    manifest-generation/bosh-lite-stubs/property-overrides.yml \
     manifest-generation/bosh-lite-stubs/instance-count-overrides.yml \
     manifest-generation/bosh-lite-stubs/persistent-disk-overrides.yml \
     manifest-generation/bosh-lite-stubs/iaas-settings.yml \
+    manifest-generation/bosh-lite-stubs/additional-jobs.yml \
     ~/workspace/deployments/warden \
     > ~/workspace/deployments/warden/diego.yml
+
+  echo "Uploading Garden-Linux-Release"
+  BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml upload release https://bosh.io/d/github.com/cloudfoundry-incubator/garden-linux-release
 
   echo "Syncing Blobs"
   BUNDLE_GEMFILE=$HOME/.bashisms/bosh.Gemfile bundle exec bosh -c $HOME/.bosh_warden_config -t 192.168.50.4 -d ~/workspace/deployments/warden/diego.yml --parallel 4 sync blobs
