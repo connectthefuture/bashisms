@@ -1,22 +1,3 @@
-function veritas_up() {
-  local bootstrap='
-  pushd $HOME
-  wget https://github.com/pivotal-cf-experimental/veritas/releases/download/latest/veritas -O ./veritas
-  chmod +x ./veritas
-
-  echo "export PATH=$PATH:$PWD" > veritas.bash
-  echo "export DROPSONDE_ORIGIN=veritas" >> veritas.bash
-  echo "export DROPSONDE_DESTINATION=localhost:3457" >> veritas.bash
-  ./veritas autodetect >> veritas.bash
-  ./veritas completions >> veritas.bash
-
-  source ./veritas.bash
-  popd
-'
-  echo "Copied to clipboard:${bootstrap}"
-  echo "$bootstrap" | pbcopy
-}
-
 function edge_envs() {
   export LOGGREGATOR_ADDR=loggregator.192.168.11.11.xip.io
   export DIEGO_RECEPTOR_ADDRESS=receptor.192.168.11.11.xip.io
