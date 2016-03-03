@@ -105,4 +105,6 @@ function each_ff {
   each "git pull --ff-only origin master && git submodule update --init --recursive"
 }
 
+function code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args "$@"; }
+
 eval "$(direnv hook $0)"
